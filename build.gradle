@@ -1,0 +1,47 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.pvelilla.ruleta.api'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('testcontainersVersion', "1.15.2")
+}
+
+dependencies {
+	compile group: 'net.sf.dozer', name: 'dozer-spring', version: '5.5.1'
+	compile group: 'io.craftsman', name: 'dozer-jdk8-support', version: '1.0.6'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	runtimeOnly 'mysql:mysql-connector-java'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.testcontainers:junit-jupiter'
+	implementation 'org.springframework.boot:spring-boot-devtools'
+	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
